@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRMNL Server</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>TRMNL Server</h1>
+        <p>Welcome to your local TRMNL server. This server manages your TRMNL device.</p>
+        
+        <div class="links">
+            <a href="/logs">View Logs</a>
+            <a href="/docs" class="secondary">API Docs</a>
+        </div>
+        
+        <div class="bitmap-preview">
+            <img id="bitmapImage" src="/api/bitmap" alt="Current TRMNL Display" />
+        </div>
+    </div>
+
+    <script>
+        function refreshBitmap() {
+            const img = document.getElementById('bitmapImage');
+            // Add timestamp to force refresh
+            img.src = '/api/bitmap?' + new Date().getTime();
+        }
+    </script>
+</body>
+</html>
