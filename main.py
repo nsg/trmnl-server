@@ -3,7 +3,7 @@ from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, Response
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from sqlalchemy import create_engine, Column, Integer, String, Float, Text, DateTime, desc
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 import json
@@ -46,6 +46,8 @@ class Setup(Base):
 
 # Pydantic models
 class DeviceStatusStamp(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    
     wifi_rssi_level: int
     wifi_status: str
     refresh_rate: int
@@ -58,6 +60,8 @@ class DeviceStatusStamp(BaseModel):
     max_alloc_size: int
 
 class LogArrayItem(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    
     creation_timestamp: int
     device_status_stamp: DeviceStatusStamp
     log_id: int
@@ -67,9 +71,13 @@ class LogArrayItem(BaseModel):
     additional_info: Dict[str, Any]
 
 class LogData(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    
     logs_array: List[LogArrayItem]
 
 class LogRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    
     log: LogData
 
 # Create tables
