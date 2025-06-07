@@ -14,7 +14,12 @@ from bitmap import generate_gradient_bitmap
 
 # Database setup
 DATABASE_URL = "sqlite:///./db.sqlite"
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    pool_recycle=300,
+    connect_args={"check_same_thread": False}  # Allow SQLite to be used across threads
+)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -103,13 +108,10 @@ def get_db():
           tags=["logs"],
           summary="Receive TRMNL device logs",
           description="Accepts log entries from TRMNL devices and stores them in the database. Requires device ID and access token in headers.")
-async def receive_log(request: Request, log_request: LogRequest):
+async def receive_log(request: Request, log_request: LogRequest, db: Session = Depends(get_db)):
     # Extract headers
     device_id = request.headers.get("ID")
     access_token = request.headers.get("Access-Token")
-    
-    # Get database session
-    db = next(get_db())
     
     try:
         # Process each log entry
@@ -133,8 +135,6 @@ async def receive_log(request: Request, log_request: LogRequest):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error saving log: {str(e)}")
-    finally:
-        db.close()
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def serve_index():
@@ -329,7 +329,14 @@ async def get_bitmap(width: int = 800, height: int = 480):
 
 def main():
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=4711)
+    uvicorn.run(
+        app, 
+        host="0.0.0.0", 
+        port=4711,
+        workers=1,  # Use 1 worker for SQLite (multiple workers would need separate DB connections)
+        loop="asyncio",
+        access_log=False
+    )
 
 if __name__ == "__main__":
     main()

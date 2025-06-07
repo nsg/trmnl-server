@@ -38,7 +38,7 @@ This is a FastAPI-based server for TRMNL e-ink displays. The server handles devi
 - Keep commit messages concise, only list what changed from HEAD
 
 ### Common Tasks
-- Server restart: `uv run uvicorn main:app --reload --host 0.0.0.0 --port 4711`
+- Server restart: `uv run uvicorn main:app --reload --host 0.0.0.0 --port 4711 --loop asyncio`
 
 ### Server Management Guidelines
 - **DO NOT** start a new server if one is already running
