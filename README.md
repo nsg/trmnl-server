@@ -16,7 +16,7 @@ uv run uvicorn main:app --reload --host 0.0.0.0 --port 4711
 
 - Device log collection and storage
 - Device setup and registration  
-- Dynamic bitmap generation for e-ink displays
+- Gradient bitmap generation for e-ink displays using Pillow
 - Web-based log viewer with real-time updates
 - RESTful API with automatic documentation
 

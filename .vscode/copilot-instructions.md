@@ -16,6 +16,9 @@ This is a FastAPI-based server for TRMNL e-ink displays. The server handles devi
 ### Code Style Preferences
 - Use **black** for Python formatting
 - Prefer **async/await** for database operations
+- **Minimal commenting**: Only add comments for complex logic that needs explanation
+- Function docstrings are fine, but avoid file-level descriptions and obvious comments
+- If the code is self-explanatory, don't add comments explaining what it does
 
 ### Frontend Patterns
 - Use vanilla JavaScript (no frameworks)
@@ -29,3 +32,9 @@ This is a FastAPI-based server for TRMNL e-ink displays. The server handles devi
 
 ### Common Tasks
 - Server restart: `uv run uvicorn main:app --reload --host 0.0.0.0 --port 4711`
+
+### Server Management Guidelines
+- **DO NOT** start a new server if one is already running
+- Always check if server is running before starting, check terminal output for that
+- If uncertain whether server is running, assume it IS running and ask user for assistance
+- Only start or stop the server when explicitly needed for testing or when user requests it

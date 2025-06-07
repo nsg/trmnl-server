@@ -10,7 +10,7 @@ import json
 import os
 import secrets
 import string
-from bitmap import generate_monochrome_bmp, generate_setup_cube_bmp
+from bitmap import generate_gradient_bitmap
 
 # Database setup
 DATABASE_URL = "sqlite:///./db.sqlite"
@@ -209,15 +209,15 @@ async def device_setup(request: Request, db: Session = Depends(get_db)):
     else:
         raise HTTPException(status_code=400, detail="Device already set up")
     
-    # Generate image URL for setup cube
-    image_url = f"http://{request.url.hostname}:{request.url.port}/api/bitmap?type=setup_cube"
+    # Generate image URL for setup
+    image_url = f"http://{request.url.hostname}:{request.url.port}/api/bitmap"
     
     return {
         "status": 200,
         "api_key": device_setup.api_key,
         "friendly_id": device_setup.friendly_id,
         "image_url": image_url,
-        "filename": "setup_cube"
+        "filename": "gradient"
     }
 
 @app.get("/api/devices",
@@ -315,15 +315,11 @@ async def get_display(request: Request, db: Session = Depends(get_db)):
 
 @app.get("/api/bitmap",
          tags=["display"],
-         summary="Generate monochrome bitmap",
-         description="Generates a dynamic monochrome BMP file for TRMNL display. Supports different bitmap types via 'type' parameter.")
-async def get_bitmap(width: int = 800, height: int = 480, type: str = "default"):
-    if type == "setup_cube":
-        bmp_data = generate_setup_cube_bmp(width, height)
-        filename = "setup_cube.bmp"
-    else:
-        bmp_data = generate_monochrome_bmp(width, height)
-        filename = "display.bmp"
+         summary="Generate gradient bitmap",
+         description="Generates a gradient bitmap file for TRMNL display.")
+async def get_bitmap(width: int = 800, height: int = 480):
+    bmp_data = generate_gradient_bitmap(width, height)
+    filename = "gradient.bmp"
     
     return Response(
         content=bmp_data,
