@@ -1,6 +1,7 @@
 import struct
 from datetime import datetime
 
+
 def generate_monochrome_bmp(width: int = 800, height: int = 480) -> bytes:
     """Generate a monochrome BMP file with dynamic content."""
     
@@ -91,6 +92,7 @@ def _get_pixel_value(pixel_x: int, pixel_y: int, width: int, height: int, curren
             return True
     
     return False
+
 
 def generate_setup_cube_bmp(width: int = 800, height: int = 480) -> bytes:
     """Generate a monochrome BMP file with a centered cube."""

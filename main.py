@@ -10,7 +10,7 @@ import json
 import os
 import secrets
 import string
-from bitmap_generator import generate_monochrome_bmp, generate_setup_cube_bmp
+from bitmap import generate_monochrome_bmp, generate_setup_cube_bmp
 
 # Database setup
 DATABASE_URL = "sqlite:///./db.sqlite"
