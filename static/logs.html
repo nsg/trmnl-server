@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRMNL Log Viewer</title>
-    <link rel="stylesheet" href="/static/logs.css">
+    <link rel="stylesheet" href="/static/logs.css?v=20250607">
 </head>
 <body>
     <div class="container">
@@ -12,6 +12,16 @@
             <h1>TRMNL Log Viewer</h1>
             <div class="controls">
                 <button id="refreshBtn">Refresh</button>
+                <div style="display: flex; align-items: center;">
+                    <select id="autoRefreshSelect">
+                        <option value="0">No auto-refresh</option>
+                        <option value="5">Auto-refresh 5s</option>
+                        <option value="10" selected>Auto-refresh 10s</option>
+                        <option value="30">Auto-refresh 30s</option>
+                        <option value="60">Auto-refresh 1m</option>
+                    </select>
+                    <div id="autoRefreshIndicator" class="auto-refresh-indicator"></div>
+                </div>
                 <select id="limitSelect">
                     <option value="50">Last 50 entries</option>
                     <option value="100" selected>Last 100 entries</option>
