@@ -12,19 +12,6 @@ uv sync
 uv run uvicorn main:app --reload --host 0.0.0.0 --port 4711
 ```
 
-## VS Code Configuration
-
-This project includes comprehensive VS Code configuration in `.vscode/` for enhanced development experience with GitHub Copilot:
-
-- **Auto-formatting** on save
-- **Pre-configured tasks** for common operations
-- **Debug configurations** 
-- **Extension recommendations**
-- **Copilot instructions** for project context
-- **Safe command auto-approval** settings
-
-See `.vscode/README.md` for detailed setup instructions.
-
 ## Features
 
 - Device log collection and storage
