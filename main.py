@@ -122,7 +122,7 @@ async def receive_log(request: Request, log_request: LogRequest):
                 log_message=log_item.log_message,
                 log_codeline=log_item.log_codeline,
                 log_sourcefile=log_item.log_sourcefile,
-                device_status=json.dumps(log_item.device_status_stamp.dict()),
+                device_status=json.dumps(log_item.device_status_stamp.model_dump()),
                 additional_info=json.dumps(log_item.additional_info)
             )
             db.add(log_entry)
