@@ -23,6 +23,13 @@ This is a FastAPI-based server for TRMNL e-ink displays. The server handles devi
 ### Frontend Patterns
 - Use vanilla JavaScript (no frameworks)
 
+### Terminal Command Guidelines
+- **ALWAYS** disable pagers when running git commands or other commands that might use a pager
+- Use `git --no-pager` for git commands (e.g., `git --no-pager diff`, `git --no-pager show`)
+- Alternatively, pipe commands through `cat` to prevent pager activation (e.g., `git diff | cat`)
+- Commands that commonly use pagers: `git diff`, `git show`, `git log`, `less`, `man`
+- This prevents the terminal from getting stuck in pager mode which cannot be handled programmatically
+
 ### Git Workflow
 - Write clear, descriptive commit messages
 - Use present tense ("Fix bug" not "Fixed bug")
