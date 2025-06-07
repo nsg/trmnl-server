@@ -44,6 +44,20 @@ header h1 {
     align-items: center;
 }
 
+.back-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 0;
+    margin-right: 20px;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
 button, select {
     padding: 8px 16px;
     border: 1px solid #ddd;
