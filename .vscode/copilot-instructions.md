@@ -36,6 +36,7 @@ This is a FastAPI-based server for TRMNL e-ink displays. The server handles devi
 - Include context about what and why, not just what changed
 - Keep commits focused on single changes
 - Keep commit messages concise, only list what changed from HEAD
+- Always add `&& echo "Commit completed"` to git commit commands to prevent terminal hanging
 
 ### Common Tasks
 - Server restart: `uv run uvicorn main:app --reload --host 0.0.0.0 --port 4711 --loop asyncio`
