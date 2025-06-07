@@ -1,3 +1,6 @@
+/* TRMNL Log Viewer - Optimized CSS */
+
+/* === RESET & BASE === */
 * {
     margin: 0;
     padding: 0;
@@ -11,6 +14,7 @@ body {
     line-height: 1.6;
 }
 
+/* === LAYOUT === */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -33,6 +37,7 @@ header h1 {
     font-size: 2rem;
 }
 
+/* === CONTROLS === */
 .controls {
     display: flex;
     gap: 10px;
@@ -52,130 +57,203 @@ button:hover {
     background: #f8f9fa;
 }
 
-button:active {
-    background: #e9ecef;
+#refreshBtn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border-color: #2980b9;
 }
 
-.loading, .error {
+#refreshBtn:hover {
+    background: linear-gradient(135deg, #2980b9, #1f5f8b);
+}
+
+/* Auto-refresh indicator */
+.auto-refresh-indicator {
+    display: none;
+    width: 8px;
+    height: 8px;
+    background: #27ae60;
+    border-radius: 50%;
+    margin-left: 8px;
+    animation: pulse 2s infinite;
+}
+
+.auto-refresh-indicator.active {
+    display: inline-block;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* === UTILITY STATES === */
+.loading {
     text-align: center;
     padding: 40px;
     font-size: 18px;
 }
 
-.error {
+#error {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
     color: #e74c3c;
     background: #ffeaea;
     border: 1px solid #e74c3c;
     border-radius: 4px;
 }
 
+/* === LOG ENTRIES === */
 .log-container {
-    display: grid;
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .log-entry {
-    text-align: center;
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 20px;
-    border-left: 4px solid #3498db;
-    margin-bottom: 1.4em;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    border-left: 3px solid #3498db;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
 }
 
 .log-entry.error {
     border-left-color: #e74c3c;
+    background-color: #fef9f9;
 }
 
 .log-entry.warning {
     border-left-color: #f39c12;
 }
 
-.log-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 15px;
-    margin-bottom: 15px;
-    align-items: start;
+.log-entry.expanded {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.log-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.log-field {
+/* === LOG SUMMARY (COLLAPSED STATE) === */
+.log-summary {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    padding: 6px 12px;
+    cursor: pointer;
+    user-select: none;
+    min-height: 32px;
 }
 
-.log-field label {
-    font-weight: bold;
-    color: #7f8c8d;
-    font-size: 12px;
-    text-transform: uppercase;
-    margin-bottom: 2px;
+.log-summary:hover {
+    background-color: #f8f9fa;
 }
 
-.log-field span {
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
+.expand-arrow {
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-top: 5px solid #666;
+    margin-right: 8px;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
 }
 
-.log-message {
-    grid-column: 1 / -1;
-    margin-top: 10px;
-    padding: 10px;
-    background: #f8f9fa;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    white-space: pre-wrap;
+.log-entry.expanded .expand-arrow {
+    transform: rotate(180deg);
 }
 
-.device-status {
-    margin-top: 15px;
-    padding: 10px;
-    background: #e8f6f3;
-    border-radius: 4px;
-    border: 1px solid #1abc9c;
-}
-
-.device-status h4 {
-    color: #16a085;
-    margin-bottom: 8px;
-    font-size: 14px;
-}
-
-.status-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minospace(150px, 1fr));
-    gap: 8px;
-    font-size: 12px;
-}
-
-.status-item {
+.log-summary-content {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    gap: 12px;
+    font-size: 13px;
+    min-width: 0;
 }
 
-.status-item .label {
+.log-message-preview {
+    font-family: 'Courier New', monospace;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #2c3e50;
+}
+
+.log-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    color: #666;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.timestamp-bold {
     font-weight: bold;
     color: #2c3e50;
 }
 
-.status-item .value {
+/* === LOG DETAILS (EXPANDED STATE) === */
+.log-details {
+    display: none;
+    padding: 6px 12px 8px 20px;
+    border-top: 1px solid #eee;
+    background-color: #fafafa;
+}
+
+.log-entry.expanded .log-details {
+    display: block;
+}
+
+.log-message-full {
+    margin: 0 0 8px 0;
+    padding: 6px;
+    background: white;
+    border-radius: 4px;
     font-family: 'Courier New', monospace;
-    color: #27ae60;
+    white-space: pre-wrap;
+    border: 1px solid #e9ecef;
+    text-align: left;
 }
 
-.timestamp {
+.log-details-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.log-info-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.log-field-compact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 0;
     font-size: 12px;
-    color: #95a5a6;
-    text-align: right;
 }
 
+.log-field-compact .label {
+    font-weight: bold;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    font-size: 11px;
+    min-width: 80px;
+    flex-shrink: 0;
+}
+
+.log-field-compact .value {
+    font-family: 'Courier New', monospace;
+    color: #2c3e50;
+    text-align: right;
+    word-break: break-all;
+}
+
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
     .container {
         padding: 10px;
@@ -187,11 +265,19 @@ button:active {
         text-align: center;
     }
     
-    .log-header {
-        grid-template-columns: 1fr;
+    .log-summary-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
     }
     
-    .log-info {
+    .log-meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .log-details-content {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
 }
